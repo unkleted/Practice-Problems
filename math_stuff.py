@@ -62,11 +62,23 @@ def primes_less_than(number):
     """Returns a list of prime numbers less than the number given."""
     primes = []
     not_primes = {}
-
     for n in range(2,number):
         if n not in not_primes:
             primes.append(n)
             for i in range(n**2, number, n):
                 not_primes[i] = 42
-
     return primes
+
+def isPrime(number):
+    if number <= 1: 
+        return False
+    elif number <= 3: 
+        return True
+    elif number % 2 == 0 or number % 3 == 0: 
+        return False
+    i = 5
+    while i*i <= number:
+        if number % i == 0 or number % (i+2) == 0: 
+            return False
+        i += 6
+    return True
