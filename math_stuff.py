@@ -3,6 +3,8 @@ import math
 def prime_factors(number):
     """Returns list of prime factors of number."""
     my_list = []
+    if number < 1:
+        return my_list
     while number % 2 == 0:
         number //= 2
         my_list.append(2)
@@ -40,6 +42,8 @@ def all_divisors(number):
     if number == 1: # Edge case for 1 having no prime factors.
         return [1]
     pf = prime_factors(number)
+    if len(pf) == 0:
+        return []
     pf_set = set(pf)
     my_lol = [] # temp list of lists
     # Populate my_lol with all combinations of that factor and its exponents
@@ -69,16 +73,17 @@ def primes_less_than(number):
                 not_primes[i] = 42
     return primes
 
-def isPrime(number):
+def is_prime(number):
+    """Returns True if number is prime."""
     if number <= 1: 
         return False
-    elif number <= 3: 
-        return True
-    elif number % 2 == 0 or number % 3 == 0: 
+    if number > 2 and number % 2 == 0:
+        return False
+    if number > 3 and number % 3 == 0:
         return False
     i = 5
-    while i*i <= number:
-        if number % i == 0 or number % (i+2) == 0: 
+    while i <= math.sqrt(number):
+        if number % i == 0 or number % (i+2) == 0:
             return False
-        i += 6
+        i+=6
     return True
