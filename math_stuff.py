@@ -58,28 +58,15 @@ def all_divisors(number):
     
     return sorted(my_complete_lst)
 
+def primes_less_than(number):
+    """Returns a list of prime numbers less than the number given."""
+    primes = []
+    not_primes = {}
 
+    for n in range(2,number):
+        if n not in not_primes:
+            primes.append(n)
+            for i in range(n**2, number, n):
+                not_primes[i] = 42
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return primes
