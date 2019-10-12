@@ -5,14 +5,14 @@
 #
 # What is the 10_001st prime number?
 
-from math_stuff import isPrime
+from math_stuff import is_prime
 
 primes = [2,3]
 i = 5
 while len(primes) < 10_001:
-    if isPrime(i):
+    if is_prime(i):
         primes.append(i)
-    if isPrime(i+2):
+    if is_prime(i+2):
         primes.append(i+2)
     i += 6
 
