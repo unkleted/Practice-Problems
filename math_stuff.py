@@ -39,11 +39,11 @@ def slow_all_divisors(number):
 
 def all_divisors(number):
     """Returns a list of all natural divisors of a number."""
-    if number == 1: # Edge case for 1 having no prime factors.
+    if number == 1: # Edge case for 1 and 0 having no prime factors.
         return [1]
-    pf = prime_factors(number)
-    if len(pf) == 0:
+    elif number == 0:
         return []
+    pf = prime_factors(number)
     pf_set = set(pf)
     my_lol = [] # temp list of lists
     # Populate my_lol with all combinations of that factor and its exponents
@@ -87,3 +87,10 @@ def is_prime(number):
             return False
         i+=6
     return True
+
+def factorial(number):
+    """Returns the factorial of number"""
+    if number == 1:
+        return 1
+    return number * factorial(number -1)
+
