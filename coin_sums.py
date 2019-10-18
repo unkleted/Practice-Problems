@@ -6,8 +6,11 @@
 # 1×£1 + 1×50p + 2×20p + 1×5p + 1×2p + 3×1p
 # How many different ways can £2 be made using any number of coins?
 
+# shamelessly stolen.  First solution was a rat's nest of 8 nested loops :(
+
 coins = [1, 2, 5, 10, 20, 50, 100, 200]
-amount = 2000
+#coins = [1, 5, 10, 25]         # <--- Use this for Freedom Units currency
+amount = 200
 already_learned_ways = {}
 
 def ways_to_make(target,avc):
