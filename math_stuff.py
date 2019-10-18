@@ -94,3 +94,18 @@ def factorial(number):
         return 1
     return number * factorial(number -1)
 
+def greatest_common_divisor(a,b):
+    """Returns the greatest common divisor"""
+    x = 0
+    y = 0
+    if a > b:
+        x = a
+        y = b
+    else:
+        x = b
+        y = a
+    while x % y != 0:
+        temp = x
+        x = y
+        y = temp % x
+    return y
