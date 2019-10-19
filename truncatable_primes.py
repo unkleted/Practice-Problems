@@ -18,7 +18,6 @@ for right in sorted(rtruncs):
     my_flag = True
     r = str(right)[1:]
     while r:
-        print(my_flag)
         if not is_prime(int(r)):
             my_flag = False
             break
