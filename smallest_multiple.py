@@ -5,17 +5,15 @@
 # What is the smallest positive number that is evenly divisible by all of the 
 # numbers from 1 to 20?
 
+from math_stuff import primes_less_than
 
-incriment = 19 * 17 * 13 * 11 * 7 * 5 * 3 * 2
-start = incriment
+smallest = 1
+up_to = 20
 
-while True:
-    if start % 20 == 0 and start % 19 == 0 and start % 18 == 0 and \
-        start % 17 == 0 and start % 16 == 0 and  start % 15 == 0 and \
-        start % 14 == 0 and start % 13 == 0 and  start % 12 == 0 and \
-        start % 11 == 0:
-        print(start)
-        break
-    else:
-        start += incriment
-        
+for prime in primes_less_than(up_to + 1):
+    exponent = 1
+    while prime ** exponent <= up_to:
+        smallest *= prime
+        exponent += 1
+
+print(smallest)
