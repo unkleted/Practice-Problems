@@ -9,6 +9,8 @@
 # HINT: Some products can be obtained in more than one way so be sure to only 
 # include it once in your sum.
 
+from math_stuff import digits_in_int
+
 digits = [i for i in range(1,10)]
 
 def is_pandigital(a,b,c):
@@ -26,7 +28,7 @@ products = []
 max = 10_000    # 1 digit number * 4 digit number max is 5 digit number.
 for a in range(2,max):
     b = a
-    while len(str(b*a)) < 5:
+    while digits_in_int(b*a) < 5:
         if is_pandigital(a,b,a*b):
             products.append(a*b)
             print(a,b)

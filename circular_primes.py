@@ -18,7 +18,7 @@ for prime in my_primes:
         continue
     my_flag = True
     p = prime
-    for i in range(len(str(p))):
+    for i in range(math_stuff.digits_in_int(p)):
         n = str(p)[-1] + str(p)[:-1]
         p = int(n)
         if p not in my_primes:

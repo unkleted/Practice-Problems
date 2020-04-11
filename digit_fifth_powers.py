@@ -12,9 +12,11 @@
 # Find the sum of all the numbers that can be written as the sum of fifth 
 # powers of their digits.
 
+from math_stuff import digits_in_int
+
 my_list = []
 i = 2
-while i < len(str(i)) * 9**5:
+while i < digits_in_int(i) * 9**5:
     number = str(i)
     total = 0
     for n in number:

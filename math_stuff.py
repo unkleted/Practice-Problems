@@ -109,3 +109,8 @@ def greatest_common_divisor(a,b):
         x = y
         y = temp % x
     return y
+
+
+def digits_in_int(number):
+    """Returns the number of digits in a given integer"""
+    return int(math.log10(number))+1
