@@ -10,7 +10,7 @@ import time
 start_time = time.time()
 
 def is_possible(row, column, the_grid):
-    """Returns the True if number can go in row and column"""
+    """Returns the list of possible numbers that can go in square"""
     possibles = [p for p in range(1,10)]
     # Check rows
     for r in the_grid[row]:
@@ -49,25 +49,37 @@ def is_possible(row, column, the_grid):
 def solve(the_grid):
     """Brute force solves a sudoku puzzle"""
     global sum_first_three
+    # don't guess
     for x in range(len(the_grid)):
         for y in range(len(the_grid[x])):
             if the_grid[x][y] == 0:
-                for n in is_possible(x,y,the_grid):
-                    the_grid[x][y] = n
+                possible = is_possible(x,y,the_grid)
+                if len(possible) == 1:
+                    the_grid[x][y] = possible[0]
                     solve(the_grid)
                     the_grid[x][y] = 0
+                    return
+    # guess
+    for x in range(len(the_grid)):
+        for y in range(len(the_grid[x])):
+            if the_grid[x][y] == 0:
+                possible = is_possible(x,y,the_grid)
+                for n in possible:
+                    the_grid[x][y] = n
+                    solve(the_grid)
+                the_grid[x][y] = 0
                 return
     first_three = int(str(the_grid[0][0]) + str(the_grid[0][1]) + str(the_grid[0][2]))
     sum_first_three += first_three
-    #print(np.matrix(the_grid))
+    print(np.matrix(the_grid))
 
 
 def split(line):
     return [int(char) for char in line]
-    #return list(line)
-
+    
 
 def get_grids(grid_file):
+    all_grids = []
     with open(grid_file) as file_object:
         lines = file_object.readlines()
     for line in range(len(lines)):
@@ -76,22 +88,14 @@ def get_grids(grid_file):
             tmp_grid = lines[line+1:line+10]
             for g in tmp_grid:
                 grid.append(split(g.rstrip()))
-            #print(grid)
-            solve(grid)
+            all_grids.append(grid)
+    return(all_grids)
 
-# grid = [
-    # [0,0,3,0,2,0,6,0,0],
-    # [9,0,0,3,0,5,0,0,1],
-    # [0,0,1,8,0,6,4,0,0],
-    # [0,0,0,1,0,2,9,0,0],
-    # [7,0,0,0,0,0,0,0,8],
-    # [0,0,6,7,0,8,2,0,0],
-    # [0,0,2,6,0,9,5,0,0],
-    # [8,0,0,2,0,3,0,0,9],
-    # [0,0,5,0,1,0,3,0,0]
-# ]
 
 sum_first_three = 0
-get_grids('text files\p096_sudoku.txt')
+grids = get_grids('text files/p096_sudoku.txt')
+for grid in grids:
+    solve(grid)
 print(sum_first_three)
+
 print(time.time() - start_time)
