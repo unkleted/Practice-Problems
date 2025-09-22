@@ -17,20 +17,41 @@
 # Find the value of d < 1000 for which 1/d contains the longest recurring cycle 
 # in its decimal fraction part.
 
-from math_stuff import prime_factors
-
-denom = 1
 max_cycle = 0
+denom = 0
 
-for d in range(2,1000):
-    pf = prime_factors(d)
-    for f in pf:
-        if f != 2 and f != 5:
-            period = 1
-            while 10**period % f != 1:
-                period +=1
-            if period > max_cycle:
-                max_cycle = period
-                denom = d
+for d in range(2, 1000):
+    # skip multiples of 2 or 5
+    if d % 2 == 0 or d % 5 == 0:
+        continue
 
-print(denom,max_cycle)
+    k = 1
+    mod = 10 % d
+    while mod != 1:
+        mod = (mod * 10) % d
+        k += 1
+
+    if k > max_cycle:
+        max_cycle = k
+        denom = d
+
+print(denom, max_cycle)
+
+
+# from math_stuff import prime_factors
+
+# denom = 1
+# max_cycle = 0
+
+# for d in range(2,1000):
+#     pf = prime_factors(d)
+#     for f in pf:
+#         if f != 2 and f != 5:
+#             period = 1
+#             while 10**period % f != 1:
+#                 period +=1
+#             if period > max_cycle:
+#                 max_cycle = period
+#                 denom = d
+
+# print(denom,max_cycle)

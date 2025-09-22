@@ -1,6 +1,8 @@
 import math
+import itertools
+from functools  import reduce
 
-def prime_factors(number):
+def prime_factors(number) -> list[int]:
     """Returns list of prime factors of number."""
     my_list = []
     if number < 1:
@@ -57,6 +59,36 @@ def gen_primes():
         q += 1
         
 
+def gen_primes_odd():
+    """ Generate and infinite sequence of prime numbers."""
+    # Sieve of Eratosthenes
+    # Code by David Eppstean, UC Irvine, 28 Feb 2002
+    # http://code.activestate.com/recipes/117119/
+
+    # Maps composites to primes witnessing their compositeness. This is memory 
+    # efficient, as the siev is not "run forward" indefinitely, but only as long 
+    # as required by the curent number being tested
+    yield 2
+    D = {}
+    # The running integer that's checked for primeness
+    q = 3
+    while True:
+        if q not in D:
+            # q is a new prime.
+            # Yield it and mark its first multiple that isn't already marked in
+            # previous iterations
+            yield q
+            D[q * q] = [q]
+        else:
+            # q is composite. D[q] is the list of primes that divide it. Since 
+            # we've reached q, we no longer need it in the map, but we'll mark
+            # the next multiples of its witnesses to prepare for larger numbers
+            for p in D[q]:
+                D.setdefault((2*p) + q, []).append(p)
+            del D[q]
+
+        q += 2
+
 def slow_all_divisors(number):
     """Returns a list of all natural divisors of a number."""
     my_list = []
@@ -69,7 +101,7 @@ def slow_all_divisors(number):
     # Remove duplicates for cases where number is a perfect square.
     return sorted(set(my_list)) 
 
-def all_divisors(number):
+def all_divisors(number) -> list[int]:
     """Returns a list of all natural divisors of a number."""
     if number == 1: # Edge case for 1 and 0 having no prime factors.
         return [1]
@@ -94,15 +126,48 @@ def all_divisors(number):
     
     return sorted(my_complete_lst)
 
+
+def all_divisors_again(number) -> list[int]:
+    """Returns a list of all natural divisors of a number."""
+    if number == 0:
+        return []
+    if number == 1:
+        return [1]
+
+    pf = prime_factors(number)
+    tuples = [tuple(f**i for i in range(pf.count(f)+1)) for f in set(pf)]
+    divisors = [math.prod(p) for p in itertools.product(*tuples)]
+    return sorted(divisors)    
+    # if number == 1: # Edge case for 1 and 0 having no prime factors.
+    #     return [1]
+    # elif number == 0:
+    #     return []
+    # pf = prime_factors(number)
+    # my_lst = []
+    # for factor in set(pf):
+    #     my_tup = tuple(factor**i for i in range(pf.count(factor) + 1))
+    #     my_lst.append(my_tup)
+
+    # # divisors = [math.prod(p) for p in itertools.product(*my_lst)]
+    # divisors = [reduce(lambda x, y: x*y, p) for p in itertools.product(*my_lst)]
+
+    # return sorted(divisors)
+
+
 def primes_less_than(number):
     """Returns a list of prime numbers less than the number given."""
     primes = []
-    not_primes = {}
-    for n in range(2,number):
-        if n not in not_primes:
-            primes.append(n)
-            for i in range(n**2, number, n):
-                not_primes[i] = 42
+    # not_primes = {}
+    # for n in range(2,number):
+    #     if n not in not_primes:
+    #         primes.append(n)
+    #         for i in range(n**2, number, n):
+    #             not_primes[i] = 42
+    pg = gen_primes_odd()
+    n = next(pg)
+    while n < number:
+        primes.append(n)
+        n = next(pg)
     return primes
 
 def is_prime(number):
@@ -128,20 +193,9 @@ def factorial(number):
 
 def greatest_common_divisor(a,b):
     """Returns the greatest common divisor"""
-    x = 0
-    y = 0
-    if a > b:
-        x = a
-        y = b
-    else:
-        x = b
-        y = a
-    while x % y != 0:
-        temp = x
-        x = y
-        y = temp % x
-    return y
-
+    while b != 0:
+        a, b = b, a % b
+    return a
 
 def digits_in_int(number):
     """Returns the number of digits in a given integer"""

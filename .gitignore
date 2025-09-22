@@ -2,3 +2,4 @@ triangle.py
 ugh.py
 .vscode/*
 __pycache__/*
+*.log

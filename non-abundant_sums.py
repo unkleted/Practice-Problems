@@ -18,32 +18,37 @@
 # Find the sum of all the positive integers which cannot be written as the sum 
 # of two abundant numbers.
 
-import time
-start = time.time()
+# import time
+from timeit import time_func
+# start = time.time()
 from math_stuff import all_divisors
 
-upper = 28123
+@time_func
+def main():
+    upper = 28123
 
-# find all abundant numbers:
-abundants = []
-for number in range(1,upper+1):
-    sum_of_divisors = sum(all_divisors(number)[:-1])
-    if sum_of_divisors > number:
-        abundants.append(number)
+    # find all abundant numbers:
+    abundants = []
+    for number in range(1,upper+1):
+        sum_of_divisors = sum(all_divisors(number)[:-1])
+        if sum_of_divisors > number:
+            abundants.append(number)
 
-# find sums of abundant pairs
-abun_pairs = {}
-while abundants:
-    for a in abundants:
-        abun_pairs[abundants[0] + a] = 0
-    abundants.pop(0)
+    # find sums of abundant pairs
+    abun_pairs = {}
+    while abundants:
+        for a in abundants:
+            abun_pairs[abundants[0] + a] = 0
+        abundants.pop(0)
 
-# look for ints that aren't in abun_pairs
-sum_of_ints = 0
-for i in range(1,upper):
-    if i not in abun_pairs:
-        sum_of_ints += i
+    # look for ints that aren't in abun_pairs
+    sum_of_ints = 0
+    for i in range(1,upper):
+        if i not in abun_pairs:
+            sum_of_ints += i
 
-print(sum_of_ints)
+    print(sum_of_ints)
 
-print(time.time() - start)
+# print(time.time() - start)
+if __name__ == "__main__":
+    main()

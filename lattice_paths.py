@@ -5,23 +5,33 @@
 #
 # How many such routes are there through a 20x20 grid?
 
+
+from timeit import time_func
+
 def make_list(num):
     foo = []
     for i in range(num):
         foo.append('')
     return foo
 
-grid = []
-grid_rows = 21
 
-for i in range(grid_rows):
-    grid.append(make_list(grid_rows))
+@time_func
+def main():
+    grid = []
+    grid_rows = 21
 
-for i in range(grid_rows):
-    for j in range(grid_rows):
-        if i == 0 or j== 0:
-            grid[i][j] = 1
-        else:
-            grid[i][j] = grid[i-1][j] + grid[i][j-1]
+    for i in range(grid_rows):
+        grid.append(make_list(grid_rows))
 
-print(grid[20][20])
+    for i in range(grid_rows):
+        for j in range(grid_rows):
+            if i == 0 or j== 0:
+                grid[i][j] = 1
+            else:
+                grid[i][j] = grid[i-1][j] + grid[i][j-1]
+
+    print(grid[20][20])
+
+
+if __name__ == "__main__":
+    main()

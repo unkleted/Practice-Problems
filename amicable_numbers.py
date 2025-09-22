@@ -12,7 +12,7 @@
 
 from math_stuff import all_divisors
 
-def proper_divisors_sum(number):
+def proper_divisors_sum(number) -> int:
     """Returns the sum of proper divisors."""
     proper = sum(all_divisors(number)[:-1])
     return proper

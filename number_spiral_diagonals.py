@@ -11,22 +11,30 @@
 # What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral 
 # formed in the same way?
 
-def count_diags(stop,step,place):
-    part_sum = 0
-    while place != stop**2:
-        place += step
-        part_sum += place
-    return part_sum
+def sum_layer(n):
+    return 4*n**2 - 6*(n-1)
 
-my_dict = {
-    i+1:i for i in range(2, 1_001 + 1, 2)
-}
+total = 1
+for n in range(3, 1002, 2):
+    total += sum_layer(n)
+print(total)
 
-my_place = 1
-sum = 1
+# def count_diags(stop,step,place):
+#     part_sum = 0
+#     while place != stop**2:
+#         place += step
+#         part_sum += place
+#     return part_sum
 
-for k,v in my_dict.items():
-    sum += count_diags(k,v,my_place)
-    my_place = k**2
+# my_dict = {
+#     i+1:i for i in range(2, 1_001 + 1, 2)
+# }
 
-print(sum)
+# my_place = 1
+# sum = 1
+
+# for k,v in my_dict.items():
+#     sum += count_diags(k,v,my_place)
+#     my_place = k**2
+
+# print(sum)
